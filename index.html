@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Awra Inventory & Procurement Documentation</title>
+    <link rel="stylesheet" href="docs.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <h2>Documentation</h2>
+            <ul>
+                <li><a href="#overview">Overview</a></li>
+                <li><a href="#installation">Installation</a></li>
+                <li><a href="#architecture">System Architecture</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#multi-tenant">Multi-Tenant Setup</a></li>
+                <li><a href="#roles-permissions">Roles & Permissions</a></li>
+                <li><a href="#items-management">Items Management</a></li>
+                <li><a href="#vendors-procurement">Vendors & Procurement</a></li>
+                <li><a href="#ai-quote-analysis">AI Quote Analysis</a></li>
+                <li><a href="#notifications-logging">Notifications & Logging</a></li>
+                <li><a href="#api">API Endpoints</a></li>
+                <li><a href="#horizon-pulse-telescope">Horizon / Pulse / Telescope</a></li>
+                <li><a href="#faq">FAQ</a></li>
+            </ul>
+        </nav>
+
+        <!-- Content Area -->
+        <main class="content">
+            <section id="overview">
+                <h1>Overview</h1>
+                <p>The Awra Inventory & Procurement System is a multi-tenant web-based platform designed to manage inventory, procurement processes, and vendor quotations with AI-powered analysis. It supports advanced features for notifications, auditing, and real-time monitoring.</p>
+            </section>
+
+            <section id="installation">
+                <h1>Installation</h1>
+                <pre><code>git clone https://github.com/yourusername/awra-inventory-procurement.git
+cd awra-inventory-procurement
+composer install
+cp .env.example .env
+php artisan key:generate
+php artisan migrate --seed
+php artisan serve</code></pre>
+            </section>
+
+            <section id="architecture">
+                <h1>System Architecture</h1>
+                <p>The system is built using Laravel with:</p>
+                <ul>
+                    <li>MySQL Database</li>
+                    <li>Redis caching</li>
+                    <li>Queue jobs for async tasks</li>
+                    <li>AI-powered Python service for quotation analysis</li>
+                    <li>Frontend with Blade templates, Tailwind CSS, and Alpine.js</li>
+                </ul>
+            </section>
+
+            <section id="features">
+                <h1>Features</h1>
+                <ul>
+                    <li>Multi-tenant inventory management</li>
+                    <li>Dynamic role-based access control</li>
+                    <li>Item, category, vendor, and quotation management</li>
+                    <li>AI-powered procurement quotation evaluation</li>
+                    <li>Automated notifications and email logs</li>
+                    <li>Integration with MPESA and Mail services</li>
+                    <li>Monitoring with Laravel Horizon, Pulse, and Telescope</li>
+                </ul>
+            </section>
+
+            <section id="multi-tenant">
+                <h1>Multi-Tenant Setup</h1>
+                <p>All data is associated with tenants using <code>custom_id</code>. Key tables include:</p>
+                <ul>
+                    <li><code>tenants</code></li>
+                    <li><code>users</code></li>
+                    <li><code>items</code></li>
+                    <li><code>vendors</code></li>
+                    <li><code>quotations</code></li>
+                </ul>
+                <p>Tenant isolation ensures secure and separate data per organization.</p>
+            </section>
+
+            <section id="roles-permissions">
+                <h1>Roles & Permissions</h1>
+                <p>Users are assigned roles via <code>role_user</code> table. Roles define access to:</p>
+                <ul>
+                    <li>Items management</li>
+                    <li>Vendor and procurement features</li>
+                    <li>Administrative dashboards</li>
+                </ul>
+            </section>
+
+            <section id="items-management">
+                <h1>Items Management</h1>
+                <p>Items can be added, edited, and deleted. Important rules:</p>
+                <ul>
+                    <li>Unique item IDs generated per day</li>
+                    <li>Cannot delete items with pending adjustments or unapproved quotations</li>
+                    <li>Supports photo upload and custom fields per tenant</li>
+                </ul>
+            </section>
+
+            <section id="vendors-procurement">
+                <h1>Vendors & Procurement</h1>
+                <p>Procurement requests (RFQs) and quotations are managed with:</p>
+                <ul>
+                    <li>Vendor selection</li>
+                    <li>Quotation submission</li>
+                    <li>Approval workflow</li>
+                    <li>Purchase order generation</li>
+                    <li>Order fulfillment tracking</li>
+                </ul>
+            </section>
+
+            <section id="ai-quote-analysis">
+                <h1>AI-Powered Quotation Analysis</h1>
+                <p>The system evaluates vendor quotations using:</p>
+                <ul>
+                    <li>Item-wise price comparison</li>
+                    <li>Overall quotation scoring</li>
+                    <li>Delivery time and vendor performance metrics</li>
+                </ul>
+            </section>
+
+            <section id="notifications-logging">
+                <h1>Notifications & Logging</h1>
+                <p>System uses:</p>
+                <ul>
+                    <li>Email notifications (Mailgun / Mailjet)</li>
+                    <li>SMS notifications</li>
+                    <li>Audit logs and activity tracking</li>
+                    <li>Telescope for monitoring requests</li>
+                </ul>
+            </section>
+
+            <section id="api">
+                <h1>API Endpoints</h1>
+                <pre><code>GET /api/items
+POST /api/items
+GET /api/quotations
+POST /api/quotations
+GET /api/vendors
+POST /api/vendors</code></pre>
+            </section>
+
+            <section id="horizon-pulse-telescope">
+                <h1>Monitoring: Horizon / Pulse / Telescope</h1>
+                <ul>
+                    <li>Horizon: queues and job monitoring</li>
+                    <li>Pulse: app performance metrics</li>
+                    <li>Telescope: request inspection and logs</li>
+                </ul>
+            </section>
+
+            <section id="faq">
+                <h1>FAQ</h1>
+                <ul>
+                    <li><strong>How do I reset migrations?</strong> Use <code>php artisan migrate:fresh --seed</code>.</li>
+                    <li><strong>Who can access Pulse?</strong> Only authorized emails (configurable in Pulse auth closure).</li>
+                    <li><strong>How do I add new tenants?</strong> Via the admin panel under tenant management.</li>
+                </ul>
+            </section>
+        </main>
+    </div>
+
+    <script src="docs.js"></script>
+</body>
+</html>
