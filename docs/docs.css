@@ -9,7 +9,7 @@ body {
 }
 
 /* Sidebar */
-.sidebar {
+/* .sidebar {
     width: 250px;
     background-color: #2c3e50;
     color: #ecf0f1;
@@ -19,7 +19,42 @@ body {
     top: 0;
     height: 100vh;
     overflow-y: auto;
+} */
+.sidebar {
+    position: sticky; /* Ensure relative positioning for the fixed button */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 100vh;
+    width: 250px;
+    background-color: #1e1e2f;
+    color: #fff;
+    padding: 20px;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
 }
+
+.sidebar .login-button {
+    margin-top: auto; /* Push it to the bottom */
+    text-align: center;
+    padding-bottom: 5em;
+}
+
+.sidebar .login-button a {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #4f46e5;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.sidebar .login-button a:hover {
+    background-color: #3730a3;
+}
+
 
 .sidebar h2 {
     margin-top: 0;
