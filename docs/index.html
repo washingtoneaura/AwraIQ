@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Awra Inventory & Procurement Documentation</title>
+    <title>Awra Inventory & Procurement - Complete Documentation</title>
     <link rel="stylesheet" href="docs.css">
 </head>
 <body>
@@ -13,161 +13,204 @@
             <h2>Documentation</h2>
             <ul>
                 <li><a href="#overview">Overview</a></li>
-                <li><a href="#installation">Installation</a></li>
+                <li><a href="#installation">Installation & Environment</a></li>
                 <li><a href="#architecture">System Architecture</a></li>
-                <li><a href="#features">Features</a></li>
+                <li><a href="#database-schema">Database Schema</a></li>
                 <li><a href="#multi-tenant">Multi-Tenant Setup</a></li>
                 <li><a href="#roles-permissions">Roles & Permissions</a></li>
                 <li><a href="#items-management">Items Management</a></li>
                 <li><a href="#vendors-procurement">Vendors & Procurement</a></li>
-                <li><a href="#ai-quote-analysis">AI Quote Analysis</a></li>
+                <li><a href="#ai-quote-analysis">AI Quotation Analysis</a></li>
                 <li><a href="#notifications-logging">Notifications & Logging</a></li>
+                <li><a href="#frontend-layouts">Frontend Layouts</a></li>
                 <li><a href="#api">API Endpoints</a></li>
-                <li><a href="#horizon-pulse-telescope">Horizon / Pulse / Telescope</a></li>
+                <li><a href="#monitoring">Monitoring: Horizon / Pulse / Telescope</a></li>
                 <li><a href="#faq">FAQ</a></li>
             </ul>
             <div class="login-button">
                 <a href="https://washingtone.techmates.team/dashboard" target="_blank">Awra System - Login</a>
             </div>
-            
         </nav>
 
-        <!-- Content Area -->
+        <!-- Main Content -->
         <main class="content">
+
+            <!-- Overview -->
             <section id="overview">
                 <h1>Overview</h1>
-                <p>The Awra Inventory & Procurement System is a multi-tenant web-based platform designed to manage inventory, procurement processes, and vendor quotations with AI-powered analysis. It supports advanced features for notifications, auditing, and real-time monitoring.</p>
+                <p>The <strong>Awra Inventory & Procurement System</strong> is a multi-tenant, web-based platform designed to handle:</p>
+                <ul>
+                    <li>Inventory management with real-time item tracking</li>
+                    <li>Procurement workflows, including RFQs, quotations, and POs</li>
+                    <li>Vendor management and automated vendor notifications</li>
+                    <li>AI-powered quotation analysis for cost and delivery optimization</li>
+                    <li>Role-based access control and multi-tenant isolation</li>
+                    <li>Monitoring, logging, and audit trails for all operations</li>
+                </ul>
+                <p>The platform is built with <strong>Laravel</strong>, <strong>MySQL</strong>, <strong>Redis</strong>, <strong>Tailwind CSS</strong>, and integrates with <strong>Mailgun, Mailjet</strong>, and <strong>MPESA API</strong>.</p>
             </section>
 
+            <!-- Installation -->
             <section id="installation">
-                <h1>Installation</h1>
-                <pre><code>git clone https://github.com/yourusername/awra-inventory-procurement.git
-cd awra-inventory-procurement
-composer install
-cp .env.example .env
-php artisan key:generate
-php artisan migrate --seed
-php artisan serve</code></pre>
+                <h1>Installation & Environment Setup</h1>
+                <p>Steps to get the system running locally or in production:</p>
+                <pre><code>...</code></pre>
+                <h3>Environment Variables</h3>
+                <ul>
+                    <li><code>APP_URL</code> - Base URL of your app</li>
+                    <li><code>DB_CONNECTION</code></li>
+                    <li><code>DB_CACHE_CONNECTION</code> - Redis cache connection</li>
+                    <li><code>MAIL_DOMAIN</code>- Email notifications</li>
+                    <li><code>MPESA</code> - Payment integration</li>
+                </ul>
             </section>
 
+            <!-- System Architecture -->
             <section id="architecture">
                 <h1>System Architecture</h1>
-                <p>The system is built using Laravel with:</p>
+                <p>The system follows a modular architecture with separation of concerns:</p>
                 <ul>
-                    <li>MySQL Database</li>
-                    <li>Redis caching</li>
-                    <li>Queue jobs for async tasks</li>
-                    <li>AI-powered Python service for quotation analysis</li>
-                    <li>Frontend with Blade templates, Tailwind CSS, and Alpine.js</li>
+                    <li><strong>Backend:</strong> Laravel (Controllers, Models, Jobs, Mailables)</li>
+                    <li><strong>Database:</strong> MySQL (normalized, multi-tenant aware)</li>
+                    <li><strong>Caching & Queues:</strong> Redis for cache and background jobs</li>
+                    <li><strong>AI Service:</strong> Python service for analyzing vendor quotations</li>
+                    <li><strong>Frontend:</strong> Blade templates, Tailwind CSS, Alpine.js</li>
+                    <li><strong>Monitoring:</strong> Laravel Horizon, Pulse, Telescope</li>
                 </ul>
             </section>
 
-            <section id="features">
-                <h1>Features</h1>
+            <!-- Database Schema -->
+            <section id="database-schema">
+                <h1>Database Schema</h1>
+                <p>Key tables and relationships:</p>
                 <ul>
-                    <li>Multi-tenant inventory management</li>
-                    <li>Dynamic role-based access control</li>
-                    <li>Item, category, vendor, and quotation management</li>
-                    <li>AI-powered procurement quotation evaluation</li>
-                    <li>Automated notifications and email logs</li>
-                    <li>Integration with MPESA and Mail services</li>
-                    <li>Monitoring with Laravel Horizon, Pulse, and Telescope</li>
+                    <li><strong>users</strong>: Linked to tenants; <code>user_id</code> used as primary key</li>
                 </ul>
             </section>
 
+            <!-- Multi-Tenant Setup -->
             <section id="multi-tenant">
                 <h1>Multi-Tenant Setup</h1>
-                <p>All data is associated with tenants using <code>custom_id</code>. Key tables include:</p>
+                <p>All tenant data is isolated . This ensures:</p>
                 <ul>
-                    <li><code>tenants</code></li>
-                    <li><code>users</code></li>
-                    <li><code>items</code></li>
-                    <li><code>vendors</code></li>
-                    <li><code>quotations</code></li>
+                    <li>Secure separation of data between organizations</li>
+                    <li>Custom fields and preferences per tenant</li>
+                    <li>Tenant-specific dashboards, items, and vendor access</li>
                 </ul>
-                <p>Tenant isolation ensures secure and separate data per organization.</p>
             </section>
 
+            <!-- Roles & Permissions -->
             <section id="roles-permissions">
                 <h1>Roles & Permissions</h1>
-                <p>Users are assigned roles via <code>role_user</code> table. Roles define access to:</p>
+                <p>Access is controlled via <code>role_user</code> mapping:</p>
                 <ul>
-                    <li>Items management</li>
-                    <li>Vendor and procurement features</li>
-                    <li>Administrative dashboards</li>
+                    <li>Admin: Full access, tenant creation, role assignment</li>
+                    <li>Procurement Officer: Manage RFQs, quotations, POs</li>
+                    <li>Inventory Manager: Manage items, categories, adjustments</li>
+                    <li>Vendor: Limited dashboard for RFQs, quotations, and POs</li>
                 </ul>
             </section>
 
+            <!-- Items Management -->
             <section id="items-management">
                 <h1>Items Management</h1>
-                <p>Items can be added, edited, and deleted. Important rules:</p>
+                <p>Key functionalities:</p>
                 <ul>
-                    <li>Unique item IDs generated per day</li>
-                    <li>Cannot delete items with pending adjustments or unapproved quotations</li>
-                    <li>Supports photo upload and custom fields per tenant</li>
+                    <li>Add, edit, delete items (subject to adjustment/quotation constraints)</li>
+                    <li>Daily-generated unique item IDs</li>
+                    <li>Photo uploads and tenant-specific custom fields</li>
+                    <li>Audit trail for every adjustment</li>
                 </ul>
             </section>
 
+            <!-- Vendors & Procurement -->
             <section id="vendors-procurement">
                 <h1>Vendors & Procurement</h1>
-                <p>Procurement requests (RFQs) and quotations are managed with:</p>
+                <p>Workflows:</p>
                 <ul>
-                    <li>Vendor selection</li>
-                    <li>Quotation submission</li>
-                    <li>Approval workflow</li>
-                    <li>Purchase order generation</li>
-                    <li>Order fulfillment tracking</li>
+                    <li>RFQs sent to selected vendors</li>
+                    <li>Vendors submit quotations via dashboard</li>
+                    <li>Approval workflow for quotations</li>
+                    <li>PO generation and tracking</li>
+                    <li>Order fulfillment and delivery tracking</li>
                 </ul>
             </section>
 
+            <!-- AI Quotation Analysis -->
             <section id="ai-quote-analysis">
                 <h1>AI-Powered Quotation Analysis</h1>
-                <p>The system evaluates vendor quotations using:</p>
+                <p>The AI module evaluates quotations using:</p>
                 <ul>
                     <li>Item-wise price comparison</li>
-                    <li>Overall quotation scoring</li>
-                    <li>Delivery time and vendor performance metrics</li>
+                    <li>Total cost analysis and ranking</li>
+                    <li>Delivery time estimation</li>
+                    <li>Vendor performance scoring</li>
+                    <li>Final recommendation to the procurement officer</li>
                 </ul>
             </section>
 
+            <!-- Notifications & Logging -->
             <section id="notifications-logging">
                 <h1>Notifications & Logging</h1>
-                <p>System uses:</p>
                 <ul>
-                    <li>Email notifications (Mailgun / Mailjet)</li>
-                    <li>SMS notifications</li>
-                    <li>Audit logs and activity tracking</li>
-                    <li>Telescope for monitoring requests</li>
+                    <li>Email notifications for RFQs, POs, and alerts</li>
+                    <li>SMS notifications via integrated gateways</li>
+                    <li>Activity and audit logging for all CRUD operations</li>
+                    <li>Request monitoring via Telescope</li>
                 </ul>
             </section>
 
+            <!-- Frontend Layouts -->
+            <section id="frontend-layouts">
+                <h1>Frontend Layouts</h1>
+                <p>The system uses multiple Blade layouts:</p>
+                <ul>
+                    <li><strong>Main Layout:</strong> Header, navigation, dynamic content section, footer</li>
+                    <li><strong>Vendor Layout:</strong> Vendor dashboard with sidebar, topbar, logout, and RFQs/PO management</li>
+                </ul>
+            </section>
+
+            <!-- API Endpoints -->
             <section id="api">
                 <h1>API Endpoints</h1>
+                <p>Available endpoints:</p>
                 <pre><code>GET /api/items
 POST /api/items
+PUT /api/items/{id}
+DELETE /api/items/{id}
+
 GET /api/quotations
 POST /api/quotations
+GET /api/quotations/{id}
+
 GET /api/vendors
-POST /api/vendors</code></pre>
+POST /api/vendors
+PUT /api/vendors/{id}</code></pre>
+                <p>All API endpoints respect tenant isolation and role permissions.</p>
             </section>
 
-            <section id="horizon-pulse-telescope">
+            <!-- Monitoring -->
+            <section id="monitoring">
                 <h1>Monitoring: Horizon / Pulse / Telescope</h1>
                 <ul>
-                    <li>Horizon: queues and job monitoring</li>
-                    <li>Pulse: app performance metrics</li>
-                    <li>Telescope: request inspection and logs</li>
+                    <li>Horizon: Manage background jobs and queue workers</li>
+                    <li>Pulse: Real-time performance metrics and alerts</li>
+                    <li>Telescope: Inspect requests, logs, and exceptions</li>
                 </ul>
             </section>
 
+            <!-- FAQ -->
             <section id="faq">
                 <h1>FAQ</h1>
                 <ul>
-                    <li><strong>How do I reset migrations?</strong> Use <code>php artisan migrate:fresh --seed</code>.</li>
-                    <li><strong>Who can access Pulse?</strong> Only authorized emails (configurable in Pulse auth closure).</li>
-                    <li><strong>How do I add new tenants?</strong> Via the admin panel under tenant management.</li>
+                    <li><strong>Reset migrations:</strong> <code>php artisan migrate:fresh --seed</code></li>
+                    <li><strong>Access Pulse:</strong> Only authorized emails configured in Pulse auth closure</li>
+                    <li><strong>Add new tenants:</strong> Admin panel → Tenant Management</li>
+                    <li><strong>Vendor login issues:</strong> Check guard configuration and vendor table</li>
+                    <li><strong>AI quotation not appearing:</strong> Ensure Python service is running and queue jobs processed</li>
                 </ul>
             </section>
+
         </main>
     </div>
 
